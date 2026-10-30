@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nonna's Princess Diary ♡</title>
+<style>
+:root {
+  --pink:#f5a6cf;
+  --hot:#e875b4;
+  --pale:#fff0f8;
+  --deep:#9d477b;
+  --cream:#fffafd;
+}
+* {box-sizing:border-box}
+body {
+  margin:0;
+  color:#86476f;
+  font-family:Georgia,serif;
+  background-color:#fff5fa;
+  background-image:radial-gradient(#f6c6df 1.5px,transparent 1.5px);
+  background-size:19px 19px;
+}
+header {
+  text-align:center;
+  padding:28px 12px 20px;
+  background:#ffe5f2;
+  border-bottom:5px double #edacd0;
+}
+.crown {font-size:30px}
+h1 {
+  margin:5px 0;
+  font-size:clamp(28px,7vw,48px);
+  color:#d65b9e;
+  text-shadow:2px 2px white;
+}
+.subtitle {font-style:italic;font-size:14px}
+nav {
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:8px;
+  padding:13px 8px;
+  background:#fffafd;
+  border-bottom:2px solid #f3c1dc;
+}
+nav button,.pink-button {
+  border:1px solid #e8a2c9;
+  border-radius:25px;
+  padding:9px 15px;
+  background:#ffe5f2;
+  color:#a64f80;
+  font-family:inherit;
+  cursor:pointer;
+}
+nav button:hover,.pink-button:hover {background:#f7c0dc}
+main {max-width:950px;margin:auto;padding:20px 14px}
+.panel {
+  background:#fffafd;
+  border:2px solid #f1b9d7;
+  border-radius:18px;
+  padding:22px;
+  margin-bottom:18px;
+  box-shadow:0 5px 15px #d98bb526;
+}
+h2 {color:#d65b9e;text-align:center}
+.welcome {text-align:center}
+.mascot {font-size:55px}
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
+  gap:13px;
+}
+.photo {
+  min-height:175px;
+  border:2px solid #efb5d5;
+  border-radius:13px;
+  overflow:hidden;
+  background:linear-gradient(145deg,#ffe1ef,#f6b9d9);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:10px;
+}
+.photo img {
+  width:100%;
+  height:145px;
+  object-fit:cover;
+  border-radius:9px;
+}
+.photo p {margin:8px 0 2px}
+.heart {border:0;background:none;color:#d65b9e;font-size:22px;cursor:pointer}
+.page {display:none}
+.page.active {display:block}
+footer {
+  text-align:center;
+  padding:25px;
+  color:#b66b96;
+  font-size:13px;
+}
+a {color:#c05291}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="crown">♕ 🎀 ♕</div>
+  <h1>Nonna's Princess Diary</h1>
+  <div class="subtitle">a little corner of my pretty little world ♡</div>
+</header>
+
+<nav>
+  <button onclick="showPage('home')">Home</button>
+  <button onclick="showPage('diary')">My Diary</button>
+  <button onclick="showPage('collections')">Collections</button>
+  <button onclick="showPage('favorites')">Favorites</button>
+  <button onclick="showPage('profile')">My Profile</button>
+</nav>
+
+<main>
+<section id="home" class="page active">
+  <div class="panel welcome">
+    <div class="mascot">🐩</div>
+    <h2>Welcome to my princess diary!</h2>
+    <p>A collection of photographs, memories and pretty little moments.</p>
+    <button class="pink-button" onclick="showPage('diary')">Enter my diary ♡</button>
+  </div>
+  <div class="panel">
+    <h2>Recently added ✧</h2>
+    <div class="grid" id="recent"></div>
+  </div>
+</section>
+
+<section id="diary" class="page">
+  <div class="panel">
+    <h2>My Photo Diary ♡</h2>
+    <p style="text-align:center">Little moments worth remembering.</p>
+    <div class="grid" id="gallery"></div>
+  </div>
+</section>
+
+<section id="collections" class="page">
+  <div class="panel">
+    <h2>My Collections 🎀</h2>
+    <div class="grid">
+      <div class="photo">🌸<p>Pretty Moments</p></div>
+      <div class="photo">🦢<p>Dreamy Days</p></div>
+      <div class="photo">💗<p>Memories</p></div>
+      <div class="photo">✨<p>Little Things</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="favorites" class="page">
+  <div class="panel">
+    <h2>My Favorites ♡</h2>
+    <div class="grid" id="favoriteGallery"></div>
+  </div>
+</section>
+
+<section id="profile" class="page">
+  <div class="panel welcome">
+    <div class="mascot">🐩</div>
+    <h2>About My Diary</h2>
+    <p>Welcome to Nonna's Princess Diary — a little collection of photographs and memories.</p>
+    <p>Made with love and lots of pink. ♡</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  ♡ Nonna's Princess Diary ♡<br>
+  made with love, bows & pink polka dots
+</footer>
+
+<script>
+const photos = [
+  {name:"Pretty Moment",emoji:"🌸"},
+  {name:"Sweet Memories",emoji:"🎀"},
+  {name:"Dreamy Days",emoji:"🦢"},
+  {name:"Little Things",emoji:"💗"}
+];
+let favorites = [];
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(id==='favorites') renderFavorites();
+}
+
+function photoCard(photo,index) {
+  return `<div class="photo">
+    <div style="font-size:40px">${photo.emoji}</div>
+    <p>${photo.name}</p>
+    <button class="heart" onclick="toggleFavorite(${index})">
+      ${favorites.includes(index)?'♥':'♡'}
+    </button>
+  </div>`;
+}
+
+function renderGallery() {
+  document.getElementById('gallery').innerHTML =
+    photos.map(photoCard).join('');
+  document.getElementById('recent').innerHTML =
+    photos.slice(0,2).map(photoCard).join('');
+}
+
+function toggleFavorite(index) {
+  favorites = favorites.includes(index)
+    ? favorites.filter(x=>x!==index)
+    : [...favorites,index];
+  renderGallery();
+  renderFavorites();
+}
+
+function renderFavorites() {
+  document.getElementById('favoriteGallery').innerHTML =
+    favorites.length
+      ? favorites.map(i=>photoCard(photos[i],i)).join('')
+      : '<p>No favorites yet ♡</p>';
+}
+
+renderGallery();
+</script>
+</body>
+</html>
